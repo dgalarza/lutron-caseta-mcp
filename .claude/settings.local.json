@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(uv run ruff check:*)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(gh pr checks:*)",
+      "Bash(uv run:*)"
     ],
     "deny": []
   }
