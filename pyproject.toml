@@ -7,7 +7,7 @@ name = "lutron-caseta-mcp"
 version = "0.1.0"
 description = "MCP server for controlling Lutron Caseta lights"
 authors = [
-    {name = "Your Name", email = "your.email@example.com"},
+    {name = "Damian Galarza", email = "damian@damiangalarza.com"},
 ]
 dependencies = [
     "mcp[cli]>=1.0.0",
@@ -16,6 +16,23 @@ dependencies = [
 requires-python = ">=3.10"
 readme = "README.md"
 license = {text = "MIT"}
+homepage = "https://github.com/dgalarza/lutron-caseta-mcp"
+repository = "https://github.com/dgalarza/lutron-caseta-mcp"
+keywords = ["lutron", "caseta", "mcp", "smart-home", "home-automation"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Home Automation",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 
 [project.scripts]
 lutron-caseta-mcp = "lutron_caseta_mcp.server:main"

@@ -10,31 +10,14 @@ A Model Context Protocol (MCP) server for controlling Lutron Caseta smart lights
 - **Type Safety**: Full type hints for better development experience
 - **Error Handling**: Robust error handling with clear error messages
 
-## Installation
-
-### Prerequisites
+## Prerequisites
 
 - Python 3.10 or higher
+- [uv](https://github.com/astral-sh/uv) package manager
 - Lutron Caseta bridge connected to your network
 - Network access to your Lutron Caseta bridge
 
-### Install from Source
-
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd lutron-caseta-mcp
-```
-
-2. Install with uv (recommended):
-```bash
-uv sync
-```
-
-Or with pip:
-```bash
-pip install -e .
-```
+No manual installation required - `uv` will handle everything automatically when you configure Claude Desktop.
 
 ## Setup
 
@@ -49,17 +32,17 @@ You need to find the IP address of your Lutron Caseta bridge on your network. Yo
 
 You have two options for pairing:
 
-#### Option A: Standalone Pairing Utility (Recommended)
+#### Option A: MCP Tool Pairing (Recommended)
+Start the MCP server and use the `pair_bridge_tool` through Claude. Simply ask Claude to "pair with my Lutron bridge at 192.168.1.100" and Claude will guide you through the process.
+
+#### Option B: Standalone Pairing Utility
 ```bash
 # Run the pairing utility
-uv run lutron-caseta-pair 192.168.1.100
+uv run --with lutron-caseta-mcp lutron-caseta-pair 192.168.1.100
 
 # Or specify a custom directory for certificates
-uv run lutron-caseta-pair 192.168.1.100 ./certificates
+uv run --with lutron-caseta-mcp lutron-caseta-pair 192.168.1.100 ./certificates
 ```
-
-#### Option B: MCP Tool Pairing
-Start the MCP server and use the `pair_bridge_tool` through your MCP client.
 
 **For both options:**
 1. When prompted, press the small black button on the back of your Lutron Caseta bridge
@@ -79,17 +62,6 @@ export LUTRON_CERT_DIR=./certificates  # Optional, defaults to current directory
 ```
 
 ## Usage
-
-### Starting the MCP Server
-
-```bash
-uv run lutron-caseta-mcp
-```
-
-The server will:
-1. Check for required certificate files
-2. Connect to your Lutron Caseta bridge
-3. Start the MCP server and wait for client connections
 
 ### Available MCP Tools
 
@@ -157,8 +129,7 @@ Add this to your Claude Desktop MCP configuration:
   "mcpServers": {
     "lutron-caseta": {
       "command": "uv",
-      "args": ["run", "lutron-caseta-mcp"],
-      "cwd": "/path/to/lutron-caseta-mcp",
+      "args": ["run", "--with", "lutron-caseta-mcp", "lutron-caseta-mcp"],
       "env": {
         "LUTRON_BRIDGE_IP": "192.168.1.100",
         "LUTRON_CERT_DIR": "/path/to/certificates"
@@ -168,15 +139,14 @@ Add this to your Claude Desktop MCP configuration:
 }
 ```
 
-**Note:** If you get `spawn uv ENOENT` errors, you may need to use the full path to `uv`. Find it with `which uv` and use the full path:
+**Note:** If you encounter Python version errors, you may need to specify a Python version by adding `"--python", "3.12"` to the args array:
 
 ```json
 {
   "mcpServers": {
     "lutron-caseta": {
-      "command": "/Users/yourname/.local/bin/uv",
-      "args": ["run", "lutron-caseta-mcp"],
-      "cwd": "/path/to/lutron-caseta-mcp",
+      "command": "uv",
+      "args": ["run", "--python", "3.12", "--with", "lutron-caseta-mcp", "lutron-caseta-mcp"],
       "env": {
         "LUTRON_BRIDGE_IP": "192.168.1.100",
         "LUTRON_CERT_DIR": "/path/to/certificates"
@@ -212,6 +182,14 @@ For more detailed logging, you can modify the server to enable debug mode or che
 
 ## Development
 
+For development, clone the repository and install in development mode:
+
+```bash
+git clone https://github.com/dgalarza/lutron-caseta-mcp.git
+cd lutron-caseta-mcp
+uv sync
+```
+
 ### Running Tests
 
 ```bash
@@ -222,7 +200,7 @@ uv run pytest
 
 - `src/lutron_caseta_mcp/server.py`: Main MCP server implementation
 - `src/lutron_caseta_mcp/pairing.py`: Pairing utilities and standalone pairing tool
-- `src/lutron_caseta_mcp/__init__.py`: Package initialization
+- `src/lutron_caseta_mcp/validation.py`: Input validation utilities
 
 ## Requirements
 
