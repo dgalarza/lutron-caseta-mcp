@@ -1,6 +1,6 @@
 # Lutron Caseta MCP Server
 
-A Model Context Protocol (MCP) server for controlling Lutron Caseta smart lights and devices. This server allows AI assistants to interact with your Lutron Caseta bridge to control lights, check device status, and manage your smart home lighting.
+A Model Context Protocol (MCP) server for controlling Lutron Caseta smart lights and devices. Powered by [pylutron-caseta](https://github.com/gurumitts/pylutron-caseta). This server allows AI assistants to interact with your Lutron Caseta bridge to control lights, check device status, and manage your smart home lighting.
 
 ## Features
 
